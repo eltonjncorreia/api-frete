@@ -14,7 +14,7 @@ def test_calculate_shipping() -> None:
 
 
 def test_calculate_shipping_should_return_ninja_delivery() -> None:
-    dto = ShippingCalculationDTO(height=152, width=40, weight=400)
+    dto = ShippingCalculationDTO(height=152, width=50, weight=850)
     shipping_service = ShippingService()
     response = shipping_service.calculate_shipping(dto)
 

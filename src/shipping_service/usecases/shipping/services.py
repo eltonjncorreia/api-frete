@@ -7,30 +7,35 @@ from src.shipping_service.domain.shipping.entities import NinjaDelivery
 from src.shipping_service.domain.shipping.entities import ShippingOption
 from src.shipping_service.domain.shipping.entities import StoreDelivery
 from .dtos import ShippingCalculationDTO
+from .storage import IShippingStorage
 
 
 class ShippingService:
+
+    def __init__(self, storage: IShippingStorage) -> None:
+        self.storage: IShippingStorage = storage
 
     def calculate_shipping(self, shipping_calculation_dto: ShippingCalculationDTO) -> List[Dict[str, Any]]:
         shipping_list = []
         ninja_delivery = NinjaDelivery()
         store_delivery = StoreDelivery()
-        product = shipping_calculation_dto.to_product()
 
+        self.storage.save_shipping(shipping_calculation_dto)
+
+        shipping_aggregate: Product = shipping_calculation_dto.to_product()
+
+        shipping_list = self.response(ninja_delivery, shipping_aggregate, shipping_list)
+        shipping_list = self.response(store_delivery, shipping_aggregate, shipping_list)
+
+        return shipping_list
+
+    def response(self, delivery: ShippingOption, aggregate: Product, shipping_list: List) -> List[Dict[str, Any]]:
         try:
-            ninja_delivery.is_valid(product)
+            delivery.is_valid(aggregate)
         except Exception:
             pass
         else:
-            shipping_json = self.to_json(ninja_delivery, product)
-            shipping_list.append(shipping_json)
-
-        try:
-            store_delivery.is_valid(product)
-        except Exception:
-            pass
-        else:
-            shipping_json = self.to_json(store_delivery, product)
+            shipping_json = self.to_json(delivery, aggregate)
             shipping_list.append(shipping_json)
 
         return shipping_list
