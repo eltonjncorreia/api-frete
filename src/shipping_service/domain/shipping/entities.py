@@ -58,5 +58,14 @@ class NinjaDelivery(ShippingOption):
     delivery_time: int = 6
 
 
+@dataclass
 class StoreDelivery(ShippingOption):
     """Represent the "Store Delivery" shipping option"""
+
+    name: str = "Entrega KaBuM"
+    shipping_calculation: float = 0.2
+    min_height: int = 5
+    max_height: int = 140
+    min_width: int = 13
+    max_width: int = 125
+    delivery_time: int = 4
