@@ -4,20 +4,20 @@ class ExceptionBase(Exception):
 
 
 class HeightCannotBeGreaterThanPermitted(ExceptionBase):
-    """ Height cannot be Greater than permitted"""
+    """Height cannot be Greater than permitted"""
 
 
 class HeightCannotBeLessThanPermitted(ExceptionBase):
-    """ Height cannot be less than permitted"""
+    """Height cannot be less than permitted"""
 
 
 class WidthCannotBeGreaterThanPermitted(ExceptionBase):
-    """ Height cannot be greater than permitted"""
+    """Height cannot be greater than permitted"""
 
 
 class WidthCannotBeLessThanPermitted(ExceptionBase):
-    """ Height cannot be less than permitted"""
+    """Height cannot be less than permitted"""
 
 
 class WeightCannotLessThanZero(ExceptionBase):
-    """ Height cannot be less than permitted"""
+    """Height cannot be less than permitted"""

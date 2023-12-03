@@ -1,23 +1,23 @@
-from typing import Any
-from typing import Dict
-from typing import List
+from typing import Any, Dict, List
 
 from src.shipping_service.domain.product.entities import Product
-from src.shipping_service.domain.shipping.entities import NinjaDelivery
-from src.shipping_service.domain.shipping.entities import ShippingOption
-from src.shipping_service.domain.shipping.entities import StoreDelivery
+from src.shipping_service.domain.shipping.entities import (
+    NinjaDelivery,
+    ShippingOption,
+    StoreDelivery,
+)
 from src.shipping_service.usecases.product.dtos import ProductDTO
+
 from .dtos import ShippingCalculationDTO
 from .storage import IShippingStorage
 
 
 class ShippingService:
-
     def __init__(self, storage: IShippingStorage) -> None:
         self.storage: IShippingStorage = storage
 
     def calculate_shipping(self, product_dto: ProductDTO) -> List[Dict[str, Any]]:
-        shipping_list = []
+        shipping_list: List[Dict[str, Any]] = []
 
         ninja_delivery = NinjaDelivery()
         store_delivery = StoreDelivery()
@@ -29,7 +29,9 @@ class ShippingService:
 
         return shipping_list
 
-    def add_shipping_list(self, delivery: ShippingOption, product: Product, shipping_list: List) -> None:
+    def add_shipping_list(
+        self, delivery: ShippingOption, product: Product, shipping_list: List
+    ) -> None:
         try:
             delivery.is_valid(product)
         except Exception:
@@ -41,7 +43,7 @@ class ShippingService:
                 name=shipping_json["nome"],
                 price=shipping_json["valor_frete"],
                 delivery_time=shipping_json["prazo_dias"],
-                product=product
+                product=product,
             )
             self.storage.save_shipping(shipping_dto)
 
@@ -49,5 +51,5 @@ class ShippingService:
         return {
             "nome": shipping.name,
             "valor_frete": shipping.shipping_cost(product.weight),
-            "prazo_dias": shipping.delivery_time
+            "prazo_dias": shipping.delivery_time,
         }

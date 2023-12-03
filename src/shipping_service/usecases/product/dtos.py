@@ -11,7 +11,4 @@ class ProductDTO:
 
     def to_product(self) -> Product:
         dimension = Size(height=self.height, width=self.width)
-        return Product(
-            dimension=dimension,
-            weight=self.weight
-        )
+        return Product(dimension=dimension, weight=self.weight)

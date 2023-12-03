@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 from src.shipping_service.domain.product.entities import Product
 from src.shipping_service.domain.shipping import exceptions
+
 from .enums import ErrorCodes
 
 
@@ -28,17 +29,23 @@ class ShippingOption:
 
     def validate_width(self, width: int) -> None:
         if width > self.max_width:
-            raise exceptions.WidthCannotBeGreaterThanPermitted(ErrorCodes.WIDTH_GREATER.value)
+            raise exceptions.WidthCannotBeGreaterThanPermitted(
+                ErrorCodes.WIDTH_GREATER.value
+            )
 
         if width < self.min_width:
             raise exceptions.WidthCannotBeLessThanPermitted(ErrorCodes.WIDTH_LESS.value)
 
     def validate_height(self, height: int) -> None:
         if height > self.max_height:
-            raise exceptions.HeightCannotBeGreaterThanPermitted(ErrorCodes.HEIGHT_GREATER.value)
+            raise exceptions.HeightCannotBeGreaterThanPermitted(
+                ErrorCodes.HEIGHT_GREATER.value
+            )
 
         if height < self.min_height:
-            raise exceptions.HeightCannotBeLessThanPermitted(ErrorCodes.HEIGHT_LESS.value)
+            raise exceptions.HeightCannotBeLessThanPermitted(
+                ErrorCodes.HEIGHT_LESS.value
+            )
 
     def validate_weight_greater_zero(self, weight: int) -> None:
         if weight < self.min_weight:

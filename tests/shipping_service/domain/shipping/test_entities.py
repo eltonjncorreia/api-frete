@@ -1,17 +1,15 @@
 import pytest
 
-from src.shipping_service.domain.product.entities import Size, Product
+from src.shipping_service.domain.product.entities import Product, Size
 from src.shipping_service.domain.shipping import exceptions
-from src.shipping_service.domain.shipping.entities import NinjaDelivery
-from src.shipping_service.domain.shipping.entities import StoreDelivery
+from src.shipping_service.domain.shipping.entities import NinjaDelivery, StoreDelivery
 from src.shipping_service.domain.shipping.enums import ErrorCodes
 
 
 class TestNinjaDelivery:
-
     def test_ninja_delivery_has_default_values(self) -> None:
         delivery = NinjaDelivery()
-        assert delivery.name == 'Entrega Ninja'
+        assert delivery.name == "Entrega Ninja"
         assert delivery.shipping_calculation == 0.3
         assert delivery.min_height == 10
         assert delivery.max_height == 200
@@ -72,10 +70,9 @@ class TestNinjaDelivery:
 
 
 class TestStoreDelivery:
-
     def test_store_delivery_has_default_values(self) -> None:
         delivery = StoreDelivery()
-        assert delivery.name == 'Entrega KaBuM'
+        assert delivery.name == "Entrega KaBuM"
         assert delivery.shipping_calculation == 0.2
         assert delivery.min_height == 5
         assert delivery.max_height == 140
