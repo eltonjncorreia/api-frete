@@ -15,3 +15,9 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
+
+  integration-tests:
+    build: .
+    depends_on:
+      - db
+    command: ["pytest", "-vvv", "tests/"]
