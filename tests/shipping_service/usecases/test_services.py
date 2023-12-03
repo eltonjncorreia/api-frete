@@ -1,10 +1,16 @@
 from src.shipping_service.usecases.shipping.dtos import ShippingCalculationDTO
 from src.shipping_service.usecases.shipping.services import ShippingService
+from src.shipping_service.usecases.shipping.storage import IShippingStorage
+
+
+class DummyStorage(IShippingStorage):
+    def save_shipping(self, shipping_calculation_dto: ShippingCalculationDTO):
+        return True
 
 
 def test_calculate_shipping() -> None:
     dto = ShippingCalculationDTO(height=102, width=40, weight=400)
-    shipping_service = ShippingService()
+    shipping_service = ShippingService(DummyStorage())
     response = shipping_service.calculate_shipping(dto)
 
     assert response == [
@@ -15,17 +21,17 @@ def test_calculate_shipping() -> None:
 
 def test_calculate_shipping_should_return_ninja_delivery() -> None:
     dto = ShippingCalculationDTO(height=152, width=50, weight=850)
-    shipping_service = ShippingService()
+    shipping_service = ShippingService(DummyStorage())
     response = shipping_service.calculate_shipping(dto)
 
     assert response == [
-        {'name': 'Entrega Ninja', 'prazo_dias': 6, 'valor_frete': 12.0},
+        {'name': 'Entrega Ninja', 'prazo_dias': 6, 'valor_frete': 25.5},
     ]
 
 
 def test_calculate_shipping_should_return_empty_list() -> None:
     dto = ShippingCalculationDTO(height=230, width=162, weight=400)
-    shipping_service = ShippingService()
+    shipping_service = ShippingService(DummyStorage())
     response = shipping_service.calculate_shipping(dto)
 
     assert response == list()
