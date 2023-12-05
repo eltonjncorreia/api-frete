@@ -72,8 +72,6 @@ Instruções para executar a aplicação:
 2. entre no diretório raiz do projeto, comando no linux: `cd api-frete/`
 3. execute a aplicação com o comando: `docker compose up --build`
 
-Acesse a API no endereço:
-http://localhost:5000/docs
 
 # Como está organizado ?
 
